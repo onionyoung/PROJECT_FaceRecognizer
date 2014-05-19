@@ -1,0 +1,88 @@
+#include <opencv2/opencv.hpp>
+#include <fstream>
+using namespace std;
+using namespace cv;
+
+int main( )
+{
+	int num_components = 10;//需要10個Eigenfaces當作主要特徵
+	double threshold = 10.0;//門檻值設定為10
+	Ptr<FaceRecognizer> model = createLBPHFaceRecognizer();
+	vector<Mat> images;
+	vector<int> labels;
+	/*fstream file; 
+	char str[150];
+    file.open("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\jpg\\info.txt", ios::in);
+	while(file.getline(str,sizeof(str))) {
+		cout<<(str[91]-48)*10+(str[92]-48);
+		images.push_back(imread(str, CV_LOAD_IMAGE_GRAYSCALE)); labels.push_back((str[91]-48)*10+(str[92]-48));
+		cout<<"\n";
+	}
+	file.close();*/
+	//將剛剛要訓練的資料丟進model中
+	//model->train(images, labels);
+	//model->save("createLBPHFaceRecognizer.xml");
+	model->load("a.xml");
+	Mat img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject01.glasses.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	int predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject02.sleepy.glasses.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+	
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject03.sleepy.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject04.wink.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject05.rightlight.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+	
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject06.leftlight.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+	
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject07.surprised.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject08.happy.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject09.glasses.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject10.sad.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject11.sad.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject12.happy.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject13.surprised.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject14.glasses.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+
+	img = imread("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\subject15.sad.jpg", CV_LOAD_IMAGE_GRAYSCALE);  
+	predicted = model->predict(img);
+	cout <<predicted<<"\n";
+	
+	system("pause");
+	return 0;
+}
