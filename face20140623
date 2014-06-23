@@ -1,0 +1,62 @@
+#include <opencv2/opencv.hpp>
+#include <fstream>
+#include "time.h"
+#include "stdlib.h"
+
+using namespace std;
+using namespace cv;
+
+int main( )
+{
+	clock_t start_time,end_time;
+	float total_time=0;
+	int num_components = 300;//需要10個Eigenfaces當作主要特徵
+	double threshold = 10.0;//門檻值設定為10
+	Ptr<FaceRecognizer> model = createEigenFaceRecognizer(num_components);
+	vector<Mat> images,img;
+	vector<int> labels;
+	fstream file; 
+	char str[150];
+   //匯入圖像
+	file.open("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\jpg\\info.txt", ios::in);
+	while(file.getline(str,sizeof(str))) {
+		cout<<(str[91]-48)*10+(str[92]-48);
+		images.push_back(imread(str, CV_LOAD_IMAGE_GRAYSCALE)); labels.push_back((str[91]-48)*10+(str[92]-48));
+		cout<<"\n";
+	}
+	file.close();
+	cout<<"~~~~~~~~~~~~~~~~~~~~~~\n";
+	//將剛剛要訓練的資料丟進model中
+	start_time = clock();
+	model->train(images, labels);
+	end_time = clock();
+	cout<<"訓練時間: "<<(float)(end_time-start_time)/CLOCKS_PER_SEC<<"second\n";
+	cout<<"~~~~~~~~~~~~~~~~~~~~~~\n";
+	start_time = clock();
+	model->save("123.xml");
+	end_time = clock();
+	cout<<"save file: "<<(float)(end_time-start_time)/CLOCKS_PER_SEC<<"second\n";
+	cout<<"~~~~~~~~~~~~~~~~~~~~~~\n";
+	//model->load("123.xml");
+	//辨識
+
+	file.open("C:\\Users\\onion\\Documents\\Visual Studio 2012\\Projects\\Project3\\Project3\\info.txt", ios::in);
+	while(file.getline(str,sizeof(str))) {
+		img.push_back(imread(str, CV_LOAD_IMAGE_GRAYSCALE));
+	}
+	file.close();
+
+	start_time = clock();
+	
+	int predicted;
+	for(int i=0;i!=15;i++){
+		predicted = model->predict(img[i]);
+		cout <<predicted<<"\n";
+	}
+	end_time = clock();
+	cout<<"辨識時間: "<<(float)(end_time-start_time)/CLOCKS_PER_SEC<<"second\n";
+
+
+	system("pause");
+	return 0;
+}
