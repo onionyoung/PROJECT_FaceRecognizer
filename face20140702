@@ -1,0 +1,31 @@
+#include <cv.h>
+#include <highgui.h>
+
+void main()
+{
+    IplImage *pSrcImg = NULL;
+    IplImage *pDstImg = NULL;
+    CvMat *mat_roi;
+    CvRect rect_roi;
+	
+    int dst_x = 100, dst_y = 150;
+    int dst_w = 500, dst_h = 200;
+    CvSize size = cvSize(dst_w, dst_h);
+
+    pSrcImg = cvLoadImage("win.jpg",1);
+    pDstImg = cvCreateImage( size, IPL_DEPTH_8U, 3);
+    mat_roi = cvCreateMat(dst_h, dst_w,CV_8UC3);
+
+    rect_roi = cvRect(dst_x, dst_y, dst_w, dst_h);
+	//rect_roi = cvRect(原圖切割x, 原圖切割y, pDstimg大小x, pDstimg大小y);
+    cvGetSubRect(pSrcImg, mat_roi, rect_roi);
+    cvGetImage(mat_roi, pDstImg);
+
+    cvShowImage( "srcImg" , pSrcImg );
+    cvShowImage( "dstImg" , pDstImg );
+    cvWaitKey( 0 );
+
+    cvReleaseImage( &pSrcImg );
+    cvReleaseImage( &pDstImg );
+   //cvReleaseMat( &mat_roi );
+}
